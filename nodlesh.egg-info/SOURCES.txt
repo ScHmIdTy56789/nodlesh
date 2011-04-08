@@ -1,4 +1,5 @@
 CHANGES.txt
+LICENSE.txt
 MANIFEST.in
 README.txt
 development.ini
@@ -17,6 +18,12 @@ nodlesh.egg-info/not-zip-safe
 nodlesh.egg-info/paster_plugins.txt
 nodlesh.egg-info/requires.txt
 nodlesh.egg-info/top_level.txt
+nodlesh/core/__init__.py
+nodlesh/core/db/__init__.py
+nodlesh/core/db/connection.py
+nodlesh/core/db/schema/__init__.py
+nodlesh/core/db/schema/fieldset/__init__.py
+nodlesh/core/db/schema/fieldset/datetime.py
 nodlesh/static/favicon.ico
 nodlesh/static/footerbg.png
 nodlesh/static/headerbg.png
@@ -27,3 +34,6 @@ nodlesh/static/pyramid-small.png
 nodlesh/static/pyramid.png
 nodlesh/static/transparent.gif
 nodlesh/templates/mytemplate.pt
+nodlesh/testers/__init__.py
+nodlesh/testers/schema.py
+nodlesh/testers/views.py
