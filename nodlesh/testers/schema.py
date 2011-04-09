@@ -24,11 +24,11 @@ default_schema = {
                },
     'aired_start': {
                     'type': 'datetime',
-                    'args': {'default': None}
+                    'args': {'default': None, 'allow_none': True}
                     },
     'aired_ended': {
                     'type': 'datetime',
-                    'args': {'default': None}
+                    'args': {'default': None, 'allow_none': True}
                     },
     'duration': {
                  'type': 'string',

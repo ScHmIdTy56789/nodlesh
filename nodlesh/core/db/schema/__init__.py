@@ -36,6 +36,8 @@ colander_data_types = {
 funcs_schema = {
                'datetime.datetime.now': datetime.datetime.now
                }
+innered_data_types = 'list', 'tuple', 'sequence', 'dict', 'set',
+
 mongoalchemy_data_types = {
                            "string": fields.StringField,
                            "int": fields.IntField,
@@ -51,6 +53,32 @@ mongoalchemy_data_types = {
                            'object_id': fields.ObjectIdField,
                            'set': fields.SetField,
                            }
+mongoalchemy_fields_kwargs = ['default', 'required', 'min_date', 'max_date', 'min_value', 'max_value', 'min_capacity', 'max_capacity', 'max_length', 'min_length' ] 
+def mongoalchemy_get_classtypes():
+    result = {}
+    for el_type, el_class in mongoalchemy_data_types.iteritems():
+        result[el_class.__name__] = el_type
+    return result
+def mongoalchemy_field_schema_factory(field, classtypes):
+    result = {}
+    f_type = classtypes[field.__class__.__name__]
+    result['type'] = f_type
+    result['name'] = field.db_field
+    if f_type in innered_data_types:
+        result['inner'] = mongoalchemy_field_schema_factory(field.item_type, classtypes)
+    args = {}
+    for el in mongoalchemy_fields_kwargs:
+        if hasattr(field, el): 
+            args[el] = getattr(field, el)
+    result['args'] = args    
+    return result
+def mongoalchemy_schema_factory(mongoalchemy_class):
+    classtypes = mongoalchemy_get_classtypes()
+    result = {}
+    for field in mongoalchemy_class.get_fields().values():
+        field_schema = mongoalchemy_field_schema_factory(field, classtypes)
+        result[field.name] = field_schema
+    return result
 def mongoalchemy_field_factory(schema_field):
     field = None
     el_type =schema_field['type']

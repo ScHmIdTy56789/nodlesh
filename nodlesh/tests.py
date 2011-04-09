@@ -34,6 +34,10 @@ class SchemaTests(unittest.TestCase):
         testing restoring functional based on custom object from another project
         '''
         self._schema_restore()
+    def test_it_dump(self):
+        schema = self._schema_restore()
+        from nodlesh.core.db.schema import mongoalchemy_schema_factory
+        mongoalchemy_schema_factory(schema)
     def test_it_counting(self):
         '''
         testing quering by resurected model
